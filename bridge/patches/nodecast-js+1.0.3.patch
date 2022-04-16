@@ -1,8 +1,8 @@
 diff --git a/node_modules/nodecast-js/lib/devices/UPnP.js b/node_modules/nodecast-js/lib/devices/UPnP.js
-index af4f0a9..59fc545 100644
+index af4f0a9..1ee5ef5 100644
 --- a/node_modules/nodecast-js/lib/devices/UPnP.js
 +++ b/node_modules/nodecast-js/lib/devices/UPnP.js
-@@ -23,13 +23,13 @@ var UPnP = (function (_Device) {
+@@ -23,15 +23,15 @@ var UPnP = (function (_Device) {
  
      _createClass(UPnP, {
          play: {
@@ -16,5 +16,8 @@ index af4f0a9..59fc545 100644
 -                this._player.load(url, { autoplay: true }, function (err) {
 +                this._player.load(url, { autoplay: true, ...options }, function (err) {
                      if (err) return _this.emit("error", err);
-                     _this._player.seek(timestamp);
+-                    _this._player.seek(timestamp);
++                    timestamp > 0 && _this._player.seek(timestamp);
                  });
+             }
+         },

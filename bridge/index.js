@@ -4,7 +4,7 @@ const httpProxy = require('http-proxy');
 const apiProxy = httpProxy.createProxyServer({ prependPath: false, secure: false, changeOrigin: true });
 const { networkInterfaces } = require('os');
 
-let fetch; import('node-fetch').then(r => console.log('f', fetch = r.default));
+let fetch; import('node-fetch').then(r => fetch = r.default);
 var parseUrl = require('parseurl');
 
 const app = express();
@@ -37,8 +37,6 @@ app.post('/devices', function (req, res) {
 });
 
 app.post('/play', function (req, res) {
-	console.log('ext req', req);
-
 	let url = req.query.url;
 	let headers = {};
 	try {
@@ -58,7 +56,12 @@ app.post('/play', function (req, res) {
 
 	let device = nodeCast.getList().find(d => d.host == req.query.device)
 
-	device.play(proxyUrl, timestamp, { contentType: 'video/x-matroska', metadata, protocolInfo: metadata.protocolInfo, dlnaFeatures: 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000' });
+	device.play(proxyUrl, timestamp, {
+		contentType: 'video/x-matroska',
+		metadata,
+		protocolInfo: metadata.protocolInfo,
+		dlnaFeatures: 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'
+	});
 
 	res.status(200).json({});
 })
@@ -74,14 +77,12 @@ app.use(function (req, res, next) {
 		headers = JSON.parse(new URL(req.url, 'http://example.com').searchParams.get('h'));
 	} catch (e) { }
 
-	console.log('proxy test', target, headers);
+	console.log('[proxy] ', target);
 
 	req.url = req.originalUrl = target;
 	parseUrl(req);
 
 	req._headers = headers;
-
-	// console.log('testy test', req);
 
 	if (!target) return res.status(400).json({ success: false });
 
@@ -97,26 +98,13 @@ app.use(function (req, res, next) {
 
 app.listen(port);
 
-const url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/big_buck_bunny_1080p.mp4';
-
-const timestamp = 0; // in seconds
 const nodeCast = new NodeCast();
 
 nodeCast.onDevice(device => {
     device.onError(err => {
 	console.log(err);
     });
-
-    // console.log(nodeCast.getList()); // list of currently discovered devices
-
-    if (device.host == '192.168.1.100') {
-
-	global.targetDevice = device;
-    }
 });
 
 nodeCast.start();
 
-setTimeout(() => {
-    nodeCast.destroy(); // destroy nodecast
-}, 200000);
