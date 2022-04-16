@@ -1,4 +1,4 @@
-# anycast: cast <video /> to smart TVs 
+# anycast: cast &lt;video /&gt; to smart TVs 
 
 Does what it says on the tin: allows casting of HTML5 video to certain smart TVs. 
 
