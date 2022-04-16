@@ -1,0 +1,48 @@
+@import "modules/reset";
+@import "modules/variables";
+@import "modules/grid";
+@import "modules/layout";
+@import "modules/utilities";
+
+.heading {
+  margin: 1em auto -1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #eee;
+
+  h1 + .lead {
+    margin-top: 0.2em;
+  }
+}
+
+.content {
+  min-height: 300px;
+}
+
+.option {
+  margin: 1em auto;
+  h5 {
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h5 button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .radio-group  {
+    label {
+      display: block;
+    }  
+    input[type="radio"] {
+      display: inline-block;
+      margin: 2px 5px 0;
+      appearance: radio;
+      width: 1em;
+      height: 1em;
+    }
+  }
+}
+
+

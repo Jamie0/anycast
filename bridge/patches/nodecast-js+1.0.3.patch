@@ -1,0 +1,20 @@
+diff --git a/node_modules/nodecast-js/lib/devices/UPnP.js b/node_modules/nodecast-js/lib/devices/UPnP.js
+index af4f0a9..59fc545 100644
+--- a/node_modules/nodecast-js/lib/devices/UPnP.js
++++ b/node_modules/nodecast-js/lib/devices/UPnP.js
+@@ -23,13 +23,13 @@ var UPnP = (function (_Device) {
+ 
+     _createClass(UPnP, {
+         play: {
+-            value: function play(url, timestamp) {
++            value: function play(url, timestamp, options = {}) {
+                 var _this = this;
+ 
+                 if (this._player) this._player.stop();
+ 
+                 this._player = new MediaRenderer(this.xml);
+-                this._player.load(url, { autoplay: true }, function (err) {
++                this._player.load(url, { autoplay: true, ...options }, function (err) {
+                     if (err) return _this.emit("error", err);
+                     _this._player.seek(timestamp);
+                 });
