@@ -56,7 +56,7 @@ app.post('/play', function (req, res) {
 
 	let device = nodeCast.getList().find(d => d.host == req.query.device)
 
-	device.play(proxyUrl, timestamp, {
+	device.play(proxyUrl, 0, {
 		contentType: 'video/x-matroska',
 		metadata,
 		protocolInfo: metadata.protocolInfo,
