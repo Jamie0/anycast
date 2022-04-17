@@ -16,7 +16,7 @@ storage.get('device', function(resp) {
 	option.setAttribute("checked", "checked");
 });
 
-window.refresh = () => fetch('http://127.0.0.1:8001/devices', { method: 'POST' }).then(s => s.json()).then(devices => {
+window.refresh = () => fetch('http://127.0.0.1:5207/devices', { method: 'POST' }).then(s => s.json()).then(devices => {
 	let base = document.querySelector('.devices.radio-group');
 	base.innerHTML = '';
 	for (var dev of devices) {

@@ -1,14 +1,14 @@
 {
   "appName": {
-    "message": "Ext Starter",
+    "message": "anycast",
     "description": "The name of the extension."
   },
   "appDescription": {
-    "message": "Boilerplate for building cross browser extensions",
+    "message": "Cast HTML5 video to TV",
     "description": "The description of the extension."
   },
   "btnTooltip": {
-    "message": "Ext Starter",
+    "message": "Cast to TV",
     "description": "Tooltip for the button."
   }
 }

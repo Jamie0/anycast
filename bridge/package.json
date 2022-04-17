@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "^4.17.3",
     "http-proxy": "^1.18.1",
-    "node-fetch": "^3.2.3",
+    "node-fetch": "2",
     "nodecast-js": "^1.0.3"
   },
   "resolutions": {

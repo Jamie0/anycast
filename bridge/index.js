@@ -8,7 +8,7 @@ let fetch; import('node-fetch').then(r => fetch = r.default);
 var parseUrl = require('parseurl');
 
 const app = express();
-const port = process.env.PORT || 8001;
+const port = process.env.PORT || 5207;
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
@@ -71,20 +71,19 @@ app.use(function (req, res, next) {
 	res.header('contentFeatures.dlna.org', 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000')
 	res.header('realTimeInfo.dlna.org', 'DLNA.ORG_TLAG=*');	
 
-	let target = '' + new URL(req.url, 'http://example.com').searchParams.get('t');
+	let target = '' + (new URL(req.url, 'http://example.com').searchParams.get('t') || '');
 	let headers = {}
 	try {
 		headers = JSON.parse(new URL(req.url, 'http://example.com').searchParams.get('h'));
 	} catch (e) { }
 
-	console.log('[proxy] ', target);
+	if (!target) return res.status(400).json({ success: false });
 
 	req.url = req.originalUrl = target;
 	parseUrl(req);
 
 	req._headers = headers;
 
-	if (!target) return res.status(400).json({ success: false });
 
 	if (req.method == 'HEAD') {
 		fetch(target, { method: 'GET', size: 1 }).then(s => {
@@ -92,6 +91,7 @@ app.use(function (req, res, next) {
 		});
 		return;
 	}
+
 
 	apiProxy.web(req, res, { target, _headers: headers });
 });
